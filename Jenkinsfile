@@ -47,6 +47,19 @@ pipeline {
             }
         }
     }
+      stage('Deploy') {
+    steps {
+        script {
+            sh '''
+                pkill -f "java -jar" || true
+                nohup java -jar build/libs/*.jar \
+                --spring.profiles.active=${SPRING_PROFILES_ACTIVE} \
+                --server.port=9090 > app.log 2>&1 &
+            '''
+        }
+    }
+}
+
 
     post {
         always {
