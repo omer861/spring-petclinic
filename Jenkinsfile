@@ -21,23 +21,20 @@ pipeline {
             }
         }
 
-        
-
         stage('Build') {
-    steps {
-        script {
-            // Run Gradle build without executing tests
-            sh '''
-                ./gradlew clean build \
-                -Dspring.profiles.active=${SPRING_PROFILES_ACTIVE} \
-                -Dspring.datasource.url=${MYSQL_URL} \
-                -Dspring.datasource.username=${MYSQL_USER} \
-                -Dspring.datasource.password=${MYSQL_PASS}
-            '''
+            steps {
+                script {
+                    // Run Gradle build without executing tests
+                    sh '''
+                        ./gradlew clean build \
+                        -Dspring.profiles.active=${SPRING_PROFILES_ACTIVE} \
+                        -Dspring.datasource.url=${MYSQL_URL} \
+                        -Dspring.datasource.username=${MYSQL_USER} \
+                        -Dspring.datasource.password=${MYSQL_PASS}
+                    '''
+                }
+            }
         }
-    }
-}
-
 
         stage('Store Artifact') {
             steps {
@@ -46,20 +43,20 @@ pipeline {
                 }
             }
         }
-    }
-      stage('Deploy') {
-    steps {
-        script {
-            sh '''
-                pkill -f "java -jar" || true
-                nohup java -jar build/libs/*.jar \
-                --spring.profiles.active=${SPRING_PROFILES_ACTIVE} \
-                --server.port=9090 > app.log 2>&1 &
-            '''
+
+        stage('Deploy') {
+            steps {
+                script {
+                    sh '''
+                        pkill -f "java -jar" || true
+                        nohup java -jar build/libs/*.jar \
+                        --spring.profiles.active=${SPRING_PROFILES_ACTIVE} \
+                        --server.port=9090 > app.log 2>&1 &
+                    '''
+                }
+            }
         }
     }
-}
-
 
     post {
         always {
