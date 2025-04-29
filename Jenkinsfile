@@ -9,7 +9,7 @@ pipeline {
         MYSQL_URL = 'jdbc:mysql://database-1.cz466cygikg5.ap-south-1.rds.amazonaws.com:3306/petclinic'
         MYSQL_HOST = 'database-1.cz466cygikg5.ap-south-1.rds.amazonaws.com'
         MYSQL_PORT = '3306'
-        MYSQL_USER = 'petclinic'
+        MYSQL_USER = 'admin'
         MYSQL_PASS = credentials('MYSQL_PASS')
         SPRING_PROFILES_ACTIVE = 'mysql'
     }
