@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        jdk '17'  // Match Java 17 from build.gradle
+        jdk 'java-17'  // Match Java 17 from build.gradle
     }
 
     environment {
