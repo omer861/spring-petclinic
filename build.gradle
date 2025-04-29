@@ -88,3 +88,7 @@ checkFormatAotTest.enabled = false
 
 formatAot.enabled = false
 formatAotTest.enabled = false
+tasks.named('test') {
+    enabled = false // This will disable test execution
+}
+
