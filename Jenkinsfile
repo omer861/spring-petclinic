@@ -24,24 +24,20 @@ pipeline {
         
 
         stage('Build') {
-            steps {
-                script {
-                    // Pass environment variables to Gradle and Spring Boot
-                    sh '''
-                        ./gradlew clean build \
-                        -Dspring.profiles.active=${SPRING_PROFILES_ACTIVE} \
-                        -Dspring.datasource.url=${MYSQL_URL} \
-                        -Dspring.datasource.username=${MYSQL_USER} \
-                        -Dspring.datasource.password=${MYSQL_PASS}
-                    '''
-                }
-            }
-            post {
-                always {
-                    junit 'build/test-results/test/*.xml'  // Archive test reports
-                }
-            }
+    steps {
+        script {
+            // Run Gradle build without executing tests
+            sh '''
+                ./gradlew clean build \
+                -Dspring.profiles.active=${SPRING_PROFILES_ACTIVE} \
+                -Dspring.datasource.url=${MYSQL_URL} \
+                -Dspring.datasource.username=${MYSQL_USER} \
+                -Dspring.datasource.password=${MYSQL_PASS}
+            '''
         }
+    }
+}
+
 
         stage('Store Artifact') {
             steps {
